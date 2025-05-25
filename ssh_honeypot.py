@@ -6,11 +6,11 @@ import paramiko
 import threading
 
 # Constants
-logging_format = logging.Formatter('%(asctime)s - %(message)s')
+logging_format = logging.Formatter('%(message)s')
 SSH_BANNER = "SSH-2.0-MySSHServer_1.0"
 
 # Host key
-host_key = paramiko.RSAKey(filename='server_key')
+host_key = paramiko.RSAKey(filename='server.key')
 
 # Loggers & Logging Files
 funnel_logger = logging.getLogger('FunnelLogger')
@@ -154,4 +154,4 @@ def honeypot(address, port, username, password):
             print(error)
 
 if __name__ == "__main__":
-    honeypot(address="0.0.0.0", port=2222, username=None, password=None)
+    honeypot(address='127.0.0.1', port=2222, username=None, password=None)

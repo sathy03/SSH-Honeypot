@@ -18,7 +18,7 @@ creds_df.to_csv("csv/credentials_attempts.csv", index=False)
 commands_data = []
 with open("cmd_audits.log", "r") as f:
     for line in f:
-        match = re.match(r".*Command (b?'?.*?'?)exceuted by ([\d\.]+)", line.strip())
+        match = re.match(r".*Command (b?'?.*?'?)executed by ([\d\.]+)", line.strip())
         if match:
             command = match.group(1).replace("b'", "").replace("'", "")
             ip = match.group(2)
