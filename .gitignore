@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+
+# Log files
+*.log
+
+# SSH keys
+server_key
+server.key
+server.key.pub
+
+# System files
+.DS_Store
+
+# Environment variables
+.env
