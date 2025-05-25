@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.log
+
+# Virtual environment
+venv/
+
+# SSH keys
+server_key
+server.key
+server.key.pub
+
+# Logs
+audits.log
+cmd_audits.log
+
+# Environment
+.env
