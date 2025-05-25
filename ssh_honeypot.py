@@ -6,7 +6,7 @@ import paramiko
 import threading
 
 # Constants
-logging_format = logging.Formatter('%(message)s')
+logging_format = logging.Formatter('%(asctime)s - %(message)s')
 SSH_BANNER = "SSH-2.0-MySSHServer_1.0"
 
 # Host key
@@ -32,7 +32,8 @@ def emulated_shell(channel, client_ip):
     command = b""
     while True:
         char = channel.recv(1)
-        channel.send(char)
+        if char:
+            channel.send(char)
         if not char:
             channel.close()
 
@@ -43,19 +44,19 @@ def emulated_shell(channel, client_ip):
                 channel.close()
             elif command.strip() == b'pwd':
                 response = b"\n" + b'\\usr\\local' + b"\r\n"
-                creds_logger.info(f'Command {command.strip()}' + 'exceuted by ' + f'{client_ip}')
+                creds_logger.info(f'Command {command.strip()}' + 'executed by ' + f'{client_ip}')
             elif command.strip() == b'whoami':
                 response = b"\n" + b"sathya" + b"\r\n"
-                creds_logger.info(f'Command {command.strip()}' + 'exceuted by ' + f'{client_ip}')
+                creds_logger.info(f'Command {command.strip()}' + 'executed by ' + f'{client_ip}')
             elif command.strip() == b'ls':
                 response = b"\n" + b"jumpbox1.conf" + b"\r\n"
-                creds_logger.info(f'Command {command.strip()}' + 'exceuted by ' + f'{client_ip}')
+                creds_logger.info(f'Command {command.strip()}' + 'executed by ' + f'{client_ip}')
             elif command.strip() == b'cat jumpbox1.conf':
                 response = b"\n" + b"Go to google.com." + b"\r\n"
-                creds_logger.info(f'Command {command.strip()}' + 'exceuted by ' + f'{client_ip}')
+                creds_logger.info(f'Command {command.strip()}' + 'executed by ' + f'{client_ip}')
             else:
                 response = b"\n" + bytes(command.strip()) + b"\r\n"
-                creds_logger.info(f'Command {command.strip()}' + 'exceuted by ' + f'{client_ip}')
+                creds_logger.info(f'Command {command.strip()}' + 'executed by ' + f'{client_ip}')
             channel.send(response)
             channel.send(b'VS-Code$')
             command = b""
@@ -101,6 +102,7 @@ class Server(paramiko.ServerInterface):
 
 def client_handle(client, addr, username, password):
     client_ip = addr[0]
+    funnel_logger.info(f"{client_ip} has connected to the server.")
     print(f"{client_ip} has connected to the server.")
 
     try:
